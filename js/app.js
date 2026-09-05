@@ -41,14 +41,14 @@ function renderAuthArea() {
 
   if (user) {
     const adminLink = user.role === 'admin' 
-      ? `<a href="/admin.html">لوحة التحكم</a>` 
+      ? `<a href="./admin.html">لوحة التحكم</a>` 
       : '';
     
     const firstName = user.name ? user.name.split(' ')[0] : 'المستخدم';
 
     area.innerHTML = `
       ${adminLink}
-      <a href="/dashboard.html">مرحباً، ${escapeHtml(firstName)}</a>
+      <a href="./dashboard.html">مرحباً، ${escapeHtml(firstName)}</a>
       <button class="btn btn-outline btn-small" id="logout-btn" style="margin-right: 5px;">تسجيل الخروج</button>
     `;
 
@@ -56,11 +56,11 @@ function renderAuthArea() {
     if (btn) {
       btn.addEventListener('click', () => {
         localStorage.removeItem('currentUser');
-        window.location.href = '/index.html';
+        window.location.href = './index.html';
       });
     }
   } else {
-    area.innerHTML = `<a href="/login.html" class="btn btn-orange">تسجيل الدخول</a>`;
+    area.innerHTML = `<a href="./login.html" class="btn btn-orange">تسجيل الدخول</a>`;
   }
   return user;
 }
@@ -73,13 +73,13 @@ function renderHeroActions() {
   const user = getCurrentUser();
   if (user) {
     heroActions.innerHTML = `
-      <a href="/dashboard.html" class="btn btn-orange">لوحة التحكم</a>
-      <a href="/resources.html" class="btn btn-outline">تصفح المصادر</a>
+      <a href="./dashboard.html" class="btn btn-orange">لوحة التحكم</a>
+      <a href="./resources.html" class="btn btn-outline">تصفح المصادر</a>
     `;
   } else {
     heroActions.innerHTML = `
-      <a href="/register.html" class="btn btn-orange">أنشئ حسابك الآن</a>
-      <a href="/resources.html" class="btn btn-outline">تصفح المصادر</a>
+      <a href="./register.html" class="btn btn-orange">أنشئ حسابك الآن</a>
+      <a href="./resources.html" class="btn btn-outline">تصفح المصادر</a>
     `;
   }
 }
@@ -100,11 +100,11 @@ function showMsg(el, message, type = 'error') {
 function requireAuth({ adminOnly = false } = {}) {
   const user = getCurrentUser();
   if (!user) {
-    window.location.href = '/login.html';
+    window.location.href = './login.html';
     return null;
   }
   if (adminOnly && user.role !== 'admin') {
-    window.location.href = '/dashboard.html';
+    window.location.href = './dashboard.html';
     return null;
   }
   return user;
