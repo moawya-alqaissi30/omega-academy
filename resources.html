@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة OMEGA | المواد الهندسية</title>
+  <link rel="icon" href="./img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .resources-section {
+      padding: 50px 20px;
+      min-height: 80vh;
+      text-align: center;
+    }
+    .search-box {
+      margin: 0 auto 30px auto;
+      max-width: 500px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: 1px solid #ff9900;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+    }
+    .folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .folder-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: #fff;
+    }
+    .folder-card:hover {
+      transform: translateY(-5px);
+      border-color: #ff9900;
+      background: rgba(255, 153, 0, 0.08);
+    }
+    .folder-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .folder-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #e0e0e0;
+      direction: ltr; /* لضمان ظهور أسماء المواد الإنجليزية بشكل صحيح */
+    }
+    .btn-open {
+      background: #ff9900;
+      color: #000;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل العلوي -->
+  <nav class="navbar">
+    <div class="brand">
+      <img src="./img/logo.png" alt="شعار OMEGA Academy">
+      <div class="brand-name">OMEGA <span>Academy</span></div>
+    </div>
+    <button class="navbar-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="./index.html">الرئيسية</a></li>
+      <li><a href="./resources.html" class="active">المكتبة</a></li>
+      <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+          <li><a href="./courses.html">الدورات</a></li>
+          
+      <li><a href="./programs.html">البرامج</a></li>
+      <li><a href="./gpa.html">حساب المعدل</a></li>
+      <li><a href="./contact.html">تواصل معنا</a></li>
+      <li id="auth-area"></li>
+    </ul>
+  </nav>
+
+  <section class="resources-section">
+    <h1 style="color:#fff;">مكتبة <span>OMEGA</span> الهندسية</h1>
+    <p style="color: #bbb; margin-bottom: 25px;">اختر المادة للوصول المباشر لملفات ومراجع Google Drive</p>
+
+    <!-- شريط بحث سريع عن المواد -->
+    <div class="search-box">
+      <input type="text" id="searchInput" onkeyup="filterFolders()" placeholder="ابحث عن مادة (مثلاً: HVAC, Dynamic, Thermo)...">
+    </div>
+
+    <!-- شبكة مجلدات المواد -->
+    <div class="folders-grid" id="foldersContainer">
+      <!-- تتم إضافة المجلدات تلقائياً عبر JS -->
+    </div>
+  </section>
+
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+      <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+    </div>
+    <p>© 2026 OMEGA Academy — جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script>
+    // قائمة مجلدات المواد المأخوذة من حساب Google Drive الخاص بك
+    const folders = [
+      { name: " تكنلوجيا السيارات & IC", link: "https://drive.google.com/drive/folders/1fhWdZ7r-YEqRYENbs_P3JfSvfv7TCYvT?usp=drive_link" },
+      { name: "رسم هندسي يدوي ", link: "https://drive.google.com/drive/folders/1Flymm-oPnghwI_pUDZUSfrbppKFSLmbi?usp=drive_link" },
+      { name: "لاب مشاغل ", link: "https://drive.google.com/drive/folders/109hrnMs7AvBnB0gs852W7Lc3wfI36CU9?usp=drive_link" },
+      { name: "Applied", link: "https://drive.google.com/drive/folders/1qTKYF1_65_UiUaudkzlPPH52oPzzjtU5?usp=drive_link" },
+      { name: "C++", link: "https://drive.google.com/drive/folders/13SDLfhQ4KEhdL-Bo4ottHVL-qcJHI_9b?usp=drive_link" },
+      { name: " calculus 2", link: "https://drive.google.com/drive/folders/14ubPn_Am-V5LXJd2Eti-qNUHTdDDg53r?usp=drive_link" },
+      { name: "calaulus 3", link: "https://drive.google.com/drive/folders/1B0aiewc2WllaQj0m-rVKihQpSG5bTWvu?usp=drive_link" },
+      { name: "Chemistry 107", link: "https://drive.google.com/drive/folders/1gnzRur4soOp1UND4zCk42kRFi0dyVMWc?usp=drive_link" },
+      { name: "Chemistry lab 108", link: "https://drive.google.com/drive/folders/1i6b1qtgU1sQsUXlP_SMqIZG_gYkHFp-i?usp=drive_link" },      
+      { name: "Circuit", link: "https://drive.google.com/drive/folders/16xn_ulakvIvODsyFwU-j6TK6uRqpBAYl?usp=drive_link" },
+      { name: "Circuit lab", link: "https://drive.google.com/drive/folders/1naXQLyKjFkgPj_0gNK3S2-oG1srRH5_e?usp=drive_link" },
+      { name: "Control Systems", link: "https://drive.google.com/drive/folders/1FfOUnArxbWLpoB26zHgGVc4XMscvhssc?usp=drive_link" },
+      { name: "Creo Lab", link: "https://drive.google.com/drive/folders/1Fr89Id8J98iqPLvqBzPHRX_UuyuJfUwF?usp=drive_link" },
+      { name: "Dynamic", link: "https://drive.google.com/drive/folders/1pDN1zNOGrR2NJXuB_FXsWn_q4jHWQkZQ?usp=drive_link" },
+      { name: "Differential Equations", link: "https://drive.google.com/drive/folders/10RVd-CO2lzUw1-83-Zdgqmx0VCCLsDa4?usp=drive_link" },
+      { name: "Design 1", link: "https://drive.google.com/drive/folders/1RRCDnFfWRiRHkzyXk67GYzBz8KLf7QBn?usp=drive_link" },
+      { name: "Electromechanical System", link: "https://drive.google.com/drive/folders/1QYsbtkFFxDgQ1tyt-xBC28dcxPlpFLK7?usp=drive_link" },
+      { name: "Engineering Economy", link: "https://drive.google.com/drive/folders/17ZLmumNN40YRZBnYy9_JZQReXLphaAQY?usp=drive_link" },
+      { name: "Engineering Measurements", link: "https://drive.google.com/drive/folders/1UqZ84aTjjqdpGHscZv0bytIVqyWXhotW?usp=drive_link" },
+      { name: "Engineering Measurements Lab ", link: "https://drive.google.com/drive/folders/1coucsT0YgDmgzcFYdkw5rbo3GhQwCvai?usp=drive_link" },
+      { name: "Ethics", link: "https://drive.google.com/drive/folders/1D1IvMmhemcQaYrsVNH72m9Kt2vRK-NU1?usp=drive_link" },     
+      { name: "Fluid Power Systems", link: "https://drive.google.com/drive/folders/1pdo2T0msEc57jTA9pj8XPd3jcxCUOj9U?usp=drive_link" },
+      { name: "Fluid Mechanics", link: "https://drive.google.com/drive/folders/1eW-pScEaUlC_08atoYlIAfLJ5tQsBSjG?usp=drive_link" },
+      { name: "Fluid Mechanics Lab", link: "https://drive.google.com/drive/folders/1ozxLwnCBt2YstRsr6RVy_yI0SpRyC2-V?usp=drive_link" },
+      { name: "Heat Transfer", link: "https://drive.google.com/drive/folders/10wBO6kvivvf3VWgGmYFn1I0zn05v-jXP?usp=drive_link" },
+      { name: "HVAC", link: "https://drive.google.com/drive/folders/1niTrGmojU0K21p0ESg3E_eRu9KA1T-Bo?usp=drive_link" },
+      { name: "Materials Science", link: "https://drive.google.com/drive/folders/1UEHMQhMfBBWMRqvBk3hk_6gG-tTIWGC9?usp=drive_link" },
+      { name: "Manufacturing Processes", link: "https://drive.google.com/drive/folders/1VYe8zHTE5C-7mc9dvUzH2OqS97-gwN8w?usp=drive_link" },
+      { name: "Mechanical Vibrations", link: "https://drive.google.com/drive/folders/1kthk9JYadJPeSRn3ijqusRNL-e3doCvJ?usp=drive_link" },
+      { name: "Numerical", link: "https://drive.google.com/drive/folders/1QlcxiKinoBmgarvfRW4aDo8keJeVo0gC?usp=drive_link" },
+      { name: "Physics 1", link: "https://drive.google.com/drive/folders/1heSRCPSnTSYdjBFV89o0tHhgHXoldFIN?usp=drive_link" },
+      { name: "Physics Lab 1", link: "https://drive.google.com/drive/folders/1ulvOpAz8eGaVCK_nS5_s5MpRppbpcezs?usp=drive_link" },
+      { name: " Physics 2 ", link: "https://drive.google.com/drive/folders/1ChKaBzl2sU9mXIp45VbvXlf8_5BYPVJg?usp=drive_link" },
+      { name: "STATICS", link: "https://drive.google.com/drive/folders/13d6kzJp0krHB0IWIZIg9aCsYVjp4uln7?usp=drive_link" },
+      { name: "Statistics and Probability", link: "https://drive.google.com/drive/folders/109y1c4jH1RVMBbhz2ch5HeifGMJUB64m?usp=drive_link" },
+      { name: "Strength of Materials", link: "https://drive.google.com/drive/folders/1pvf6TIR-kdBLbO0mhKt2h9c50-ZLJvZt?usp=drive_link" },
+      { name: "Strength of Materials 2", link: "https://drive.google.com/drive/folders/1BtTi9-Ewwwk0oDwKBV26QDij0qq7cK3A?usp=drive_link" },
+      { name: "Strength of Materials LAB", link: "https://drive.google.com/drive/folders/1pzfpb6zBtnP8GiKi7aCMQIxNBwtyXZPp?usp=drive_link" },
+      { name: "Thermo 1", link: "https://drive.google.com/drive/folders/1C-NBkdUWrKVuynaXXE8EB57ZNMjhjsPH?usp=drive_link" },
+      { name: "Thermo 2", link: "https://drive.google.com/drive/folders/1fKyZHcMnW9vx2MQwUX6PbzPQbKsTqAqE?usp=drive_link" },
+      { name: "Thermal Lab (1)", link: "https://drive.google.com/drive/folders/1BuNL-872x3THebW7Surn-Vmu6KGtKqTh?usp=drive_link" },
+      { name: "Theory Of Machines", link: "https://drive.google.com/drive/folders/17vzT9_Wp2oBeOKBXhmRWUKr26VI6qxcu?usp=drive_link" }
+    ];
+
+    function displayFolders(data) {
+      const container = document.getElementById('foldersContainer');
+      container.innerHTML = '';
+      data.forEach(f => {
+        const card = document.createElement('a');
+        card.className = 'folder-card';
+        card.href = f.link;
+        card.target = '_blank';
+        card.innerHTML = `
+          <div class="folder-icon">📁</div>
+          <div class="folder-title">${f.name}</div>
+          <span class="btn-open">فتح المجلد</span>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterFolders() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = folders.filter(f => f.name.toLowerCase().includes(query));
+      displayFolders(filtered);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      displayFolders(folders);
+    });
+  </script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

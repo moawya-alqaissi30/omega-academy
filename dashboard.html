@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسابي | OMEGA Academy</title>
+<link rel="icon" href="./img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="./img/logo.png" alt="شعار OMEGA Academy">
+    <div class="brand-name">OMEGA <span>Academy</span></div>
+  </div>
+  <button class="navbar-toggle">☰</button>
+  <ul class="nav-links">
+    <li><a href="./index.html">الرئيسية</a></li>
+    <li><a href="./resources.html">المكتبة</a></li>
+    <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+    <li><a href="./courses.html">الدورات</a></li>
+    <li><a href="./programs.html">البرامج</a></li>
+    <li><a href="./gpa.html">حساب المعدل</a></li>
+    <li><a href="./contact.html">تواصل معنا</a></li>
+    <li id="auth-area"></li>
+  </ul>
+</nav>
+
+<section class="section">
+  <h2 class="section-title" id="welcome-title">حساب المعدل...</h2>
+  <p class="section-subtitle">هذا حساب المعدل الخاص فيك. اختر من الخيارات تحت للمتابعة</p>
+  <div class="grid">
+    <div class="card">
+      <span class="badge">المكتبة</span>
+      <h3>مكتبة OMEGA</h3>
+      <p>تصفح كل المصادر المتوفرة  .</p>
+      <a href="/resources.html" class="btn btn-outline btn-small">فتح المصادر</a>
+    </div>
+    <div class="card">
+      <span class="badge">المعدل</span>
+      <h3>حساب المعدل</h3>
+      <p>احسب معدلك الفصلي أو التراكمي بسهولة.</p>
+      <a href="/gpa.html" class="btn btn-outline btn-small">حساب المعدل</a>
+    </div>
+    <div class="card">
+      <span class="badge">البرامج</span>
+      <h3>البرامج الهندسية</h3>
+      <p>اكتشف البرامج المتاحة حالياً في الأكاديمية.</p>
+      <a href="/programs.html" class="btn btn-outline btn-small">تصفح البرامج</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="social">
+    <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+    <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+  </div>
+  <p>© 2026 OMEGA Academy — بإشراف م. معاوية القيسي. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script src="/js/app.js"></script>
+<script>
+(async () => {
+  const user = await requireAuth();
+  if (!user) return;
+  document.getElementById('welcome-title').textContent = `أهلاً فيك، ${user.name} 👋`;
+})();
+</script>
+</body>
+</html>

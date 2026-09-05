@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول | OMEGA Academy</title>
+<link rel="icon" href="./img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="./img/logo.png" alt="شعار OMEGA Academy">
+    <div class="brand-name">OMEGA <span>Academy</span></div>
+  </div>
+  <button class="navbar-toggle">☰</button>
+  <ul class="nav-links">
+    <li><a href="./index.html">الرئيسية</a></li>
+    <li><a href="./resources.html">المكتبة</a></li>
+    <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+    <li><a href="./courses.html">الدورات</a></li>
+    <li><a href="./programs.html">البرامج</a></li>
+    <li><a href="./gpa.html">حساب المعدل</a></li>
+    <li><a href="./contact.html">تواصل معنا</a></li>
+    <li id="auth-area"></li>
+  </ul>
+</nav>
+
+<div class="auth-wrap">
+  <h2>تسجيل الدخول</h2>
+  <p class="sub">أهلاً فيك من جديد! سجّل دخولك للمتابعة</p>
+  <div class="form-msg" id="msg"></div>
+  <form id="login-form">
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input type="email" name="email" required placeholder="example@mail.com">
+    </div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input type="password" name="password" required placeholder="••••••••">
+    </div>
+    <button type="submit" class="btn btn-orange" style="width:100%; justify-content:center;">تسجيل الدخول</button>
+  </form>
+  <p class="auth-switch">ليس لديك حساب؟ <a href="/register.html">أنشئ حساباً جديداً</a></p>
+</div>
+
+<script src="/js/app.js"></script>
+
+<script>
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.querySelectorAll('input')[0].value.trim();
+    const password = document.querySelectorAll('input')[1].value.trim();
+    const msgDiv = document.getElementById('msg');
+
+    try {
+        const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            // 1. حفظ بيانات المستخدم في LocalStorage
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+            
+            // 2. التوجيه الفوري للصفحة الرئيسية
+            window.location.href = '/index.html';
+        } else {
+            if(msgDiv) {
+                msgDiv.style.color = 'red';
+                msgDiv.innerText = data.message || 'خطأ في بيانات الدخول';
+            } else {
+                alert(data.message || 'خطأ في بيانات الدخول');
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        alert('تعذر الاتصال بالسيرفر!');
+    }
+});
+</script>
+</body>
+</html>

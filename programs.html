@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>البرامج الهندسية | OMEGA Academy</title>
+  <link rel="icon" href="./img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* خانة البحث */
+    .search-wrapper {
+      max-width: 650px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 153, 0, 0.35);
+      color: #ffffff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.15rem;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-input:focus {
+      border-color: #ff9900;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 20px rgba(255, 153, 0, 0.35);
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    /* عناوين التصنيفات */
+    .category-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ff9900;
+      margin: 45px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 153, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* شبكة الكروت الكبيرة */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .program-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 153, 0, 0.25);
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 250px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .program-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 153, 0, 0.6);
+      box-shadow: 0 15px 30px rgba(255, 153, 0, 0.18);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .program-card h3 {
+      color: #ffffff;
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .program-card p {
+      color: var(--text-muted, #d1d1d1);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      flex-grow: 1;
+    }
+
+    .program-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-program {
+      flex: 1;
+      min-width: 130px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-download {
+      background-color: #ff9900;
+      color: #000000;
+    }
+
+    .btn-download:hover {
+      background-color: #e68a00;
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+    }
+
+    .btn-install {
+      background-color: transparent;
+      color: #ff9900;
+      border: 1px solid #ff9900;
+    }
+
+    .btn-install:hover {
+      background-color: rgba(255, 153, 0, 0.12);
+      color: #ffffff;
+    }
+
+    .no-results {
+      text-align: center;
+      color: var(--text-muted, #aaa);
+      font-size: 1.25rem;
+      padding: 60px 0;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل العلوي -->
+  <nav class="navbar">
+    <div class="brand">
+      <img src="./img/logo.png" alt="شعار OMEGA Academy">
+      <div class="brand-name">OMEGA <span>Academy</span></div>
+    </div>
+    <button class="navbar-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="./index.html">الرئيسية</a></li>
+      <li><a href="./resources.html">المكتبة</a></li>
+      <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+      <li><a href="./courses.html">الدورات</a></li>
+      <li><a href="./programs.html" class="active">البرامج</a></li>
+      <li><a href="./gpa.html">حساب المعدل</a></li>
+      <li><a href="./contact.html">تواصل معنا</a></li>
+      <li id="auth-area"></li>
+    </ul>
+  </nav>
+
+  <!-- قسم البرامج الهندسية -->
+  <section class="section">
+    <h2 class="section-title">البرامج الهندسية والبرمجية</h2>
+    <p class="section-subtitle">حزمة متكاملة ومصنفة من البرامج والأدوات الهندسية المعتمدة مع روابط التحميل وأدلة التثبيت</p>
+    
+    <!-- خانة البحث -->
+    <div class="search-wrapper">
+      <input type="text" id="program-search" class="search-input" placeholder="🔍 ابحث عن برنامج (مثال: ANSYS, SolidWorks, MATLAB, Creo, HAP...)...">
+    </div>
+
+    <!-- رسالة عدم وجود نتائج -->
+    <div class="no-results" id="no-results">لم يتم العثور على برامج تطابق بحثك.</div>
+
+    <!-- التصنيف الأول: البرمجة والتحليل -->
+    <div class="category-block">
+      <h3 class="category-title">💻 البرمجة وبيئات التطوير</h3>
+      <div class="programs-grid">
+
+        <!-- Code::Blocks -->
+        <div class="program-card">
+          <h3>Code::Blocks</h3>
+          <p>بيئة تطوير متكاملة (IDE) مجانية ومفتوحة المصدر خفيفة السلاسة لكتابة وتنفيذ برامج C و C++ بسهولة للتطبيقات الهندسية.</p>
+          <div class="program-actions">
+            <a href="https://www.codeblocks.org/downloads/binaries/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+          </div>
+        </div>
+
+        <!-- MATLAB -->
+        <div class="program-card">
+          <h3>MATLAB R2024b</h3>
+          <p>البيئة الأولى عالمياً للحسابات الهندسية، التحليل العددي، المحاكاة الرياضية ورسم البيانات والمعادلات المعقدة.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/analysis/matlab-r2024b-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-matlab-r2024b-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- VS Code -->
+        <div class="program-card">
+          <h3>Visual Studio Code</h3>
+          <p>محرر الأكواد الأكثر انتشاراً للغات البرمجة المختلفة (Python, C++, HTML...) مزود بإضافات هندسية واسعة.</p>
+          <div class="program-actions">
+            <a href="https://code.visualstudio.com/download?_exp_download=fb315fc982" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+          </div>
+        </div>
+
+        <!-- Arduino IDE -->
+        <div class="program-card">
+          <h3>Arduino IDE</h3>
+          <p>البرنامج الرسمي لبرمجة متحكمات الأردوينو، ربط الحساسات والمحركات، وبناء مشاريع التحكم الآلي والميكاترونكس.</p>
+          <div class="program-actions">
+            <a href="https://www.arduino.cc/en/software/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- التصنيف الثاني: التصميم والنمذجة -->
+    <div class="category-block">
+      <h3 class="category-title">📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)</h3>
+      <div class="programs-grid">
+
+        <!-- ANSYS Products 2023 -->
+        <div class="program-card">
+          <h3>ANSYS Products 2023</h3>
+          <p>الحزمة الأقوى عالمياً للمحاكاة الهندسية والتحليل باستخدام العناصر المنتهية (FEA) وديناميكا الموائع الحسابية (CFD) لدراسة الإجهادات وانتقال الحرارة والجريان.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/engineering/ansys-products-2023-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-ansys-products-2023-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- SolidWorks 2025 -->
+        <div class="program-card">
+          <h3>SolidWorks 2025</h3>
+          <p>البرنامج الرائد عالمياً في التصميم والنمذجة الميكانيكية ثلاثية الأبعاد، تجميع قطع الآلات، وإجراء محاكاة الإجهادات والحركة الاحترافية.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/3d-cad/solidworks-2025-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-solidworks-2025-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- PTC Creo 2025 -->
+        <div class="program-card">
+          <h3>PTC Creo 2025</h3>
+          <p>أحد أقوى برامج التصميم الميكانيكي ثلاثي الأبعاد لنمذجة الأجزاء المعقدة، التجميع (Assembly)، وتحليل الإجهادات والمحاكاة.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/3d-cad/ptc-creo-2025-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-ptc-creo-2025-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- AutoCAD 2023 -->
+        <div class="program-card">
+          <h3>AutoCAD 2023</h3>
+          <p>البرنامج القياسي لتصميم المخططات الهندسية التفصيلية 2D/3D، المخططات التنفيذية، والتصاميم المعمارية والميكانيكية.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/3d-cad/autodesk-autocad-2023-free-download-2408191/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-autodesk-autocad-2023-without-errors-2/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- Revit 2023 -->
+        <div class="program-card">
+          <h3>Autodesk Revit 2023</h3>
+          <p>برنامج نمذجة معلومات المباني (BIM) للتصميم الميكانيكي، الكهربائي، والمعماري (MEP) مع دعم كامل لتنسيق شبكات التكييف.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/3d-designing/autodesk-revit-2023-free-download-1040629/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-autodesk-revit-2023-without-errors-2/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- 3ds Max 2023 -->
+        <div class="program-card">
+          <h3>Autodesk 3ds Max 2023</h3>
+          <p>برنامج احترافي في النمذجة ثلاثية الأبعاد، الإظهار المعماري (Rendering)، والتحريك عالي الدقة للمشاريع الهندسية.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/3d-modelling/autodesk-3ds-max-2023-free-download-3317830/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-autodesk-3ds-max-2023-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- التصنيف الثالث: الطاقة والأنظمة الحرارية والتكييف -->
+    <div class="category-block">
+      <h3 class="category-title">⚡ الطاقة والأبحاث الحرارية والتكييف (HVAC)</h3>
+      <div class="programs-grid">
+
+        <!-- PVsyst 2024 -->
+        <div class="program-card">
+          <h3>PVsyst 2024</h3>
+          <p>الأداة الاحترافية الأولى لدراسة، محاكاة، وتحليل أداء المنظومات الكهروضوئية (Solar PV) وحساب الإنتاجية المالية والحرارية.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/simulation/pvsyst-2024-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-pvsyst-2024-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- EES 2024 -->
+        <div class="program-card">
+          <h3>EES Pro 2024</h3>
+          <p>برنامج حل المعادلات الهندسية وحساب الخواص الثرموديناميكية ومائع التبريد لمشروعات التكييف، محطات الطاقة والدورات الحرارية.</p>
+          <div class="program-actions">
+            <a href="https://getintopc.com/softwares/maths/engineering-equation-solver-ees-pro-2024-free-download/" target="_blank" rel="noopener" class="btn-program btn-download">تحميل البرنامج</a>
+            <a href="https://how-to-pc.info/how-to-install-engineering-equation-solver-ees-pro-2024-without-errors/" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>
+          </div>
+        </div>
+
+        <!-- Carrier HAP -->
+        <div class="program-card">
+          <h3>Carrier HAP</h3>
+          <p>برنامج شركة كاريير المعتمد لحساب أحمال التبريد والتدفئة للمباني وتصميم أنظمة التكييف المركزي واختيار المعدات المناسبة.</p>
+          <div class="program-actions">
+            <a href="https://drive.google.com/drive/folders/1o92ma5rGBh_5w3Pnmz4sCksQBcJj3SNR?usp=sharing" target="_blank" rel="noopener" class="btn-program btn-download">تحميل من Google Drive</a>
+          </div>
+        </div>
+
+        <!-- Duct Sizer -->
+        <div class="program-card">
+          <h3>McQuay Duct Sizer</h3>
+          <p>أداة هندسية سريعة ودقيقة لحساب أبعاد مجاري الهواء (Ducts)، سرعة الهواء، وهبوط الضغط لأنظمة التكييف والتهوية.</p>
+          <div class="program-actions">
+            <a href="https://drive.google.com/drive/folders/1o92ma5rGBh_5w3Pnmz4sCksQBcJj3SNR?usp=sharing" target="_blank" rel="noopener" class="btn-program btn-download">تحميل من Google Drive</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- التذييل Footer -->
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+      <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+    </div>
+    <p>© 2026 OMEGA Academy — بإشراف م. معاوية القيسي. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script src="./js/app.js"></script>
+  <script>
+    // كود البحث التفاعلي وإخفاء التصنيفات الفارغة أثناء البحث
+    const searchInput = document.getElementById('program-search');
+    const categoryBlocks = document.querySelectorAll('.category-block');
+    const noResults = document.getElementById('no-results');
+
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      let totalVisibleCards = 0;
+
+      categoryBlocks.forEach(block => {
+        const cards = block.querySelectorAll('.program-card');
+        let blockVisibleCards = 0;
+
+        cards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const desc = card.querySelector('p').textContent.toLowerCase();
+
+          if (title.includes(term) || desc.includes(term)) {
+            card.style.display = 'flex';
+            blockVisibleCards++;
+            totalVisibleCards++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // إخفاء اسم التصنيف كاملاً إذا لم يطابق أي برنامج فيه
+        if (blockVisibleCards > 0) {
+          block.style.display = 'block';
+        } else {
+          block.style.display = 'none';
+        }
+      });
+
+      // إظهار رسالة عدم وجود نتائج
+      noResults.style.display = totalVisibleCards > 0 ? 'none' : 'block';
+    });
+  </script>
+</body>
+</html>
